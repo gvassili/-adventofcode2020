@@ -17,17 +17,17 @@ type result struct {
 }
 
 func runChallenge(challenge calendar.Challenge) []result {
-	var input *os.File
+	var r *os.File
 	if challenge.Day() != 0 {
-		file, err := os.Open(fmt.Sprintf("./calendar/day%d/input", challenge.Day()))
+		file, err := os.Open(fmt.Sprintf("./calendar/day%02d/input", challenge.Day()))
 		if err != nil {
 			return []result{{"prepare", "", err, 0}}
 		}
 		defer file.Close()
-		input = file
+		r = file
 	}
 	startTs := time.Now()
-	if err := challenge.Prepare(input); err != nil {
+	if err := challenge.Prepare(r); err != nil {
 		return []result{{"prepare", "", err, time.Now().Sub(startTs)}}
 	}
 	prepareTs := time.Now()

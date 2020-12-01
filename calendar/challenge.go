@@ -2,11 +2,13 @@ package calendar
 
 import (
 	"fmt"
+	"github.com/gvassili/adventofcode2020/calendar/day01"
 	"io"
 	"sort"
 )
 
 var challenges = map[int]func() Challenge{
+	1: func() Challenge {return new(day01.Day01)},
 }
 
 func Load(day int) (Challenge, error) {
@@ -20,7 +22,7 @@ func Load(day int) (Challenge, error) {
 
 type Challenge interface {
 	Day() int
-	Prepare(input io.Reader) error
+	Prepare(r io.Reader) error
 	Part1() (string, error)
 	Part2() (string, error)
 }
