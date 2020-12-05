@@ -1,4 +1,4 @@
-package day01
+package day02
 
 import (
 	"bytes"
@@ -6,18 +6,19 @@ import (
 	"testing"
 )
 
-const input = `1721
-979
-366
-299
-675
-1456`
+const input = `1-3 a: abcde
+1-3 b: cdefg
+2-9 c: ccccccccc`
 
 func TestDay01_Prepare(t *testing.T) {
 	var challenge Challenge
 	err := challenge.Prepare(bytes.NewReader([]byte(input)))
 	assert.NoError(t, err)
-	assert.Equal(t, []int{1721, 979, 366, 299, 675, 1456}, challenge.input)
+	assert.Equal(t, []password{
+		{policy{1, 3, 'a'}, "abcde"},
+		{policy{1, 3, 'b'}, "cdefg"},
+		{policy{2, 9, 'c'}, "ccccccccc"},
+	}, challenge.passwords)
 }
 
 func BenchmarkDay01_Prepare(b *testing.B) {
@@ -36,7 +37,7 @@ func TestDay01_Part1(t *testing.T) {
 	assert.NoError(t, err)
 	r, err := challenge.Part1()
 	assert.NoError(t, err)
-	assert.Equal(t, "514579", r)
+	assert.Equal(t, "2", r)
 }
 
 func BenchmarkDay01_Part1(b *testing.B) {
@@ -54,7 +55,7 @@ func TestDay01_Part2(t *testing.T) {
 	assert.NoError(t, err)
 	r, err := challenge.Part2()
 	assert.NoError(t, err)
-	assert.Equal(t, "241861950", r)
+	assert.Equal(t, "1", r)
 }
 
 func BenchmarkDay01_Part2(b *testing.B) {

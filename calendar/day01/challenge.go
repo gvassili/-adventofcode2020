@@ -7,16 +7,16 @@ import (
 	"strconv"
 )
 
-type Day01 struct {
+type Challenge struct {
 	input    []int
 	inputMap []int
 }
 
-func (d *Day01) Day() int {
+func (d *Challenge) Day() int {
 	return 1
 }
 
-func (d *Day01) Prepare(r io.Reader) error {
+func (d *Challenge) Prepare(r io.Reader) error {
 	d.input = make([]int, 0, 2048)
 	d.inputMap = make([]int, 2048)
 	scanner := bufio.NewScanner(r)
@@ -31,7 +31,7 @@ func (d *Day01) Prepare(r io.Reader) error {
 	return scanner.Err()
 }
 
-func (d *Day01) Part1() (string, error) {
+func (d *Challenge) Part1() (string, error) {
 	for _, n := range d.input {
 		t := 2020 - n
 		if t >= 0 && t == d.inputMap[t] {
@@ -41,7 +41,7 @@ func (d *Day01) Part1() (string, error) {
 	return "", errors.New("could not find result")
 }
 
-func (d *Day01) Part2() (string, error) {
+func (d *Challenge) Part2() (string, error) {
 	for i, n := range d.input {
 		for _, m := range d.input[i:] {
 			t := 2020 - n - m
