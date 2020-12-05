@@ -4,12 +4,12 @@ import (
 	"bufio"
 	"errors"
 	"io"
-	"sort"
 	"strconv"
 )
 
 type Day01 struct {
-	input []int
+	input    []int
+	inputMap []int
 }
 
 func (d *Day01) Day() int {
@@ -17,6 +17,8 @@ func (d *Day01) Day() int {
 }
 
 func (d *Day01) Prepare(r io.Reader) error {
+	d.input = make([]int, 0, 2048)
+	d.inputMap = make([]int, 2048)
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		n, err := strconv.Atoi(scanner.Text())
@@ -24,18 +26,16 @@ func (d *Day01) Prepare(r io.Reader) error {
 			return err
 		}
 		d.input = append(d.input, n)
+		d.inputMap[n] = n
 	}
-	sort.Ints(d.input)
 	return scanner.Err()
 }
 
-// did some test with binary search or map, sample is too small of optimisation, just sorting the array take two time longer, however it's worth it for part 2
 func (d *Day01) Part1() (string, error) {
-	for i, n := range d.input {
-		subInput := d.input[i:]
-		j := sort.SearchInts(subInput, 2020-n)
-		if j != len(subInput) && subInput[j] == 2020-n {
-			return strconv.Itoa(n * subInput[j]), nil
+	for _, n := range d.input {
+		t := 2020 - n
+		if t >= 0 && t == d.inputMap[t] {
+			return strconv.Itoa((2020 - n) * n), nil
 		}
 	}
 	return "", errors.New("could not find result")
@@ -43,15 +43,10 @@ func (d *Day01) Part1() (string, error) {
 
 func (d *Day01) Part2() (string, error) {
 	for i, n := range d.input {
-		for j, m := range d.input[i:] {
-			r := 2020 - n - m
-			if r < 0 {
-				continue
-			}
-			subInput := d.input[i+j:]
-			w := sort.SearchInts(subInput, r)
-			if w != len(subInput) && subInput[w] == r {
-				return strconv.Itoa(n * m * subInput[w]), nil
+		for _, m := range d.input[i:] {
+			t := 2020 - n - m
+			if t > 0 && t == d.inputMap[t] {
+				return strconv.Itoa(t * n * m), nil
 			}
 		}
 	}
