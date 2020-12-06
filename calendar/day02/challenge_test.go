@@ -3,12 +3,26 @@ package day02
 import (
 	"bytes"
 	"github.com/stretchr/testify/assert"
+	"io/ioutil"
+	"os"
 	"testing"
 )
 
 const input = `1-3 a: abcde
 1-3 b: cdefg
 2-9 c: ccccccccc`
+
+var fullInput = func() []byte {
+	r, err := os.Open("./input")
+	if err != nil {
+		panic(err)
+	}
+	b, err := ioutil.ReadAll(r)
+	if err != nil {
+		panic(err)
+	}
+	return b
+}()
 
 func TestDayChallenge_Prepare(t *testing.T) {
 	var challenge Challenge
@@ -23,9 +37,7 @@ func TestDayChallenge_Prepare(t *testing.T) {
 
 func BenchmarkChallenge_Prepare(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		b.StopTimer()
-		buf := bytes.NewReader([]byte(input))
-		b.StartTimer()
+		buf := bytes.NewReader(fullInput)
 		var challenge Challenge
 		challenge.Prepare(buf)
 	}
@@ -41,9 +53,10 @@ func TestDay02_Part1(t *testing.T) {
 }
 
 func BenchmarkChallenge_Part1(b *testing.B) {
-	buf := bytes.NewReader([]byte(input))
+	buf := bytes.NewReader(fullInput)
 	var challenge Challenge
 	challenge.Prepare(buf)
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		challenge.Part1()
 	}
@@ -59,7 +72,7 @@ func TestChallenge_Part2(t *testing.T) {
 }
 
 func BenchmarkChallenge_Part2(b *testing.B) {
-	buf := bytes.NewReader([]byte(input))
+	buf := bytes.NewReader(fullInput)
 	var challenge Challenge
 	challenge.Prepare(buf)
 	for i := 0; i < b.N; i++ {
