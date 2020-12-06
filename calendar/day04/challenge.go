@@ -25,11 +25,11 @@ type Challenge struct {
 	passports []passport
 }
 
-func (d *Challenge) Day() int {
+func (c *Challenge) Day() int {
 	return 4
 }
 
-func (d *Challenge) Prepare(r io.Reader) error {
+func (c *Challenge) Prepare(r io.Reader) error {
 	scanner := bufio.NewScanner(r)
 	scanner.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) {
 		if atEOF && len(data) == 0 {
@@ -86,7 +86,7 @@ func (d *Challenge) Prepare(r io.Reader) error {
 		if err := passportScanner.Err(); err != nil {
 			return err
 		}
-		d.passports = append(d.passports, passport)
+		c.passports = append(c.passports, passport)
 	}
 	if err := scanner.Err(); err != nil {
 		return err
@@ -94,11 +94,11 @@ func (d *Challenge) Prepare(r io.Reader) error {
 	return nil
 }
 
-func (d *Challenge) Part1() (string, error) {
+func (c *Challenge) Part1() (string, error) {
 	validate := validator.New()
 	validate.SetTagName("p1")
 	validCount := 0
-	for _, passport := range d.passports {
+	for _, passport := range c.passports {
 		if err := validate.Struct(&passport); err == nil {
 			validCount++
 		}
@@ -106,7 +106,7 @@ func (d *Challenge) Part1() (string, error) {
 	return strconv.Itoa(validCount), nil
 }
 
-func (d *Challenge) Part2() (string, error) {
+func (c *Challenge) Part2() (string, error) {
 	validate := validator.New()
 	validate.SetTagName("p2")
 	hairColorRegex := regexp.MustCompile(`#[0-9a-f]{6}`)
@@ -129,7 +129,7 @@ func (d *Challenge) Part2() (string, error) {
 		}
 	})
 	validCount := 0
-	for _, passport := range d.passports {
+	for _, passport := range c.passports {
 		if err := validate.Struct(&passport); err == nil {
 			validCount++
 		}
