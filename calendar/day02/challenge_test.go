@@ -25,57 +25,57 @@ var fullInput = func() []byte {
 }()
 
 func TestDayChallenge_Prepare(t *testing.T) {
-	var challenge Challenge
-	err := challenge.Prepare(bytes.NewReader([]byte(input)))
+	var c Challenge
+	err := c.Prepare(bytes.NewReader([]byte(input)))
 	assert.NoError(t, err)
 	assert.Equal(t, []password{
 		{policy{1, 3, 'a'}, "abcde"},
 		{policy{1, 3, 'b'}, "cdefg"},
 		{policy{2, 9, 'c'}, "ccccccccc"},
-	}, challenge.passwords)
+	}, c.passwords)
 }
 
 func BenchmarkChallenge_Prepare(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		buf := bytes.NewReader(fullInput)
-		var challenge Challenge
-		challenge.Prepare(buf)
+		var c Challenge
+		c.Prepare(buf)
 	}
 }
 
 func TestDay02_Part1(t *testing.T) {
-	var challenge Challenge
-	err := challenge.Prepare(bytes.NewReader([]byte(input)))
+	var c Challenge
+	err := c.Prepare(bytes.NewReader([]byte(input)))
 	assert.NoError(t, err)
-	r, err := challenge.Part1()
+	r, err := c.Part1()
 	assert.NoError(t, err)
 	assert.Equal(t, "2", r)
 }
 
 func BenchmarkChallenge_Part1(b *testing.B) {
 	buf := bytes.NewReader(fullInput)
-	var challenge Challenge
-	challenge.Prepare(buf)
+	var c Challenge
+	c.Prepare(buf)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		challenge.Part1()
+		c.Part1()
 	}
 }
 
 func TestChallenge_Part2(t *testing.T) {
-	var challenge Challenge
-	err := challenge.Prepare(bytes.NewReader([]byte(input)))
+	var c Challenge
+	err := c.Prepare(bytes.NewReader([]byte(input)))
 	assert.NoError(t, err)
-	r, err := challenge.Part2()
+	r, err := c.Part2()
 	assert.NoError(t, err)
 	assert.Equal(t, "1", r)
 }
 
 func BenchmarkChallenge_Part2(b *testing.B) {
 	buf := bytes.NewReader(fullInput)
-	var challenge Challenge
-	challenge.Prepare(buf)
+	var c Challenge
+	c.Prepare(buf)
 	for i := 0; i < b.N; i++ {
-		challenge.Part2()
+		c.Part2()
 	}
 }

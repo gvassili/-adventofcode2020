@@ -62,64 +62,64 @@ var fullInput = func() []byte {
 }()
 
 func TestChallenge_Prepare(t *testing.T) {
-	var challenge Challenge
-	err := challenge.Prepare(bytes.NewReader([]byte(input)))
+	var c Challenge
+	err := c.Prepare(bytes.NewReader([]byte(input)))
 	assert.NoError(t, err)
 	assert.Equal(t, []passport{
 		{Ecl: "gry", Pid: "860033327", Eyr: 2020, Hcl: "#fffffd", Byr: 1937, Iyr: 2017, Hgt: "183cm"},
 		{Iyr: 2013, Ecl: "amb", Eyr: 2023, Pid: "028048884", Hcl: "#cfa07d", Byr: 1929},
 		{Hcl: "#ae17e1", Iyr: 2013, Eyr: 2024, Ecl: "brn", Pid: "760753108", Byr: 1931, Hgt: "179cm"},
 		{Hcl: "#cfa07d", Eyr: 2025, Pid: "166559648", Iyr: 2011, Ecl: "brn", Hgt: "59in"},
-	}, challenge.passports)
+	}, c.passports)
 }
 
 func BenchmarkChallenge_Prepare(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		buf := bytes.NewReader(fullInput)
-		var challenge Challenge
-		challenge.Prepare(buf)
+		var c Challenge
+		c.Prepare(buf)
 	}
 }
 
 func TestChallenge_Part1(t *testing.T) {
-	var challenge Challenge
-	err := challenge.Prepare(bytes.NewReader([]byte(input)))
+	var c Challenge
+	err := c.Prepare(bytes.NewReader([]byte(input)))
 	assert.NoError(t, err)
-	r, err := challenge.Part1()
+	r, err := c.Part1()
 	assert.NoError(t, err)
 	assert.Equal(t, "2", r)
 }
 
 func BenchmarkChallenge_Part1(b *testing.B) {
 	buf := bytes.NewReader(fullInput)
-	var challenge Challenge
-	challenge.Prepare(buf)
+	var c Challenge
+	c.Prepare(buf)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		challenge.Part1()
+		c.Part1()
 	}
 }
 
 func TestChallenge_Part2(t *testing.T) {
-	var challenge Challenge
-	err := challenge.Prepare(bytes.NewReader([]byte(validInput)))
+	var c Challenge
+	err := c.Prepare(bytes.NewReader([]byte(validInput)))
 	assert.NoError(t, err)
-	r, err := challenge.Part2()
+	r, err := c.Part2()
 	assert.NoError(t, err)
 	assert.Equal(t, "4", r)
-	challenge = Challenge{}
-	err = challenge.Prepare(bytes.NewReader([]byte(invalidInput)))
+	c = Challenge{}
+	err = c.Prepare(bytes.NewReader([]byte(invalidInput)))
 	assert.NoError(t, err)
-	r, err = challenge.Part2()
+	r, err = c.Part2()
 	assert.NoError(t, err)
 	assert.Equal(t, "0", r)
 }
 
 func BenchmarkChallenge_Part2(b *testing.B) {
-	buf := bytes.NewReader([]byte(input))
-	var challenge Challenge
-	challenge.Prepare(buf)
+	buf := bytes.NewReader(fullInput)
+	var c Challenge
+	c.Prepare(buf)
 	for i := 0; i < b.N; i++ {
-		challenge.Part2()
+		c.Part2()
 	}
 }

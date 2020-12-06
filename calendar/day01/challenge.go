@@ -16,17 +16,17 @@ func (d *Challenge) Day() int {
 	return 1
 }
 
-func (d *Challenge) Prepare(r io.Reader) error {
-	d.input = make([]int, 0, 2048)
-	d.inputMap = make([]int, 2048)
+func (c *Challenge) Prepare(r io.Reader) error {
+	c.input = make([]int, 0, 2048)
+	c.inputMap = make([]int, 2048)
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		n, err := strconv.Atoi(scanner.Text())
 		if err != nil {
 			return err
 		}
-		d.input = append(d.input, n)
-		d.inputMap[n] = n
+		c.input = append(c.input, n)
+		c.inputMap[n] = n
 	}
 	return scanner.Err()
 }

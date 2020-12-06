@@ -23,11 +23,11 @@ type Challenge struct {
 	passwords []password
 }
 
-func (d *Challenge) Day() int {
+func (c *Challenge) Day() int {
 	return 2
 }
 
-func (d *Challenge) Prepare(r io.Reader) error {
+func (c *Challenge) Prepare(r io.Reader) error {
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		var password password
@@ -39,14 +39,14 @@ func (d *Challenge) Prepare(r io.Reader) error {
 		if err != nil {
 			return err
 		}
-		d.passwords = append(d.passwords, password)
+		c.passwords = append(c.passwords, password)
 	}
 	return scanner.Err()
 }
 
-func (d *Challenge) Part1() (string, error) {
+func (c *Challenge) Part1() (string, error) {
 	validCount := 0
-	for _, password := range d.passwords {
+	for _, password := range c.passwords {
 		n := strings.Count(password.str, string(password.policy.char))
 		if n <= password.policy.max && n >= password.policy.min {
 			validCount++
@@ -55,9 +55,9 @@ func (d *Challenge) Part1() (string, error) {
 	return strconv.Itoa(validCount), nil
 }
 
-func (d *Challenge) Part2() (string, error) {
+func (c *Challenge) Part2() (string, error) {
 	validCount := 0
-	for _, password := range d.passwords {
+	for _, password := range c.passwords {
 		if (password.str[password.policy.min-1] == password.policy.char) != // xor
 			(password.str[password.policy.max-1] == password.policy.char) {
 			validCount++
