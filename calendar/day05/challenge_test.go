@@ -72,7 +72,7 @@ func TestChallenge_Part2(t *testing.T) {
 }
 
 func BenchmarkChallenge_Part2(b *testing.B) {
-	buf := bytes.NewReader([]byte(input))
+	buf := bytes.NewReader(fullInput)
 	var c Challenge
 	c.Prepare(buf)
 	for i := 0; i < b.N; i++ {
