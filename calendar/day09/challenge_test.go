@@ -8,7 +8,26 @@ import (
 	"testing"
 )
 
-const input = ``
+const input = `35
+20
+15
+25
+47
+40
+62
+55
+65
+95
+102
+117
+150
+182
+127
+219
+299
+277
+309
+576`
 
 var fullInput = func() []byte {
 	r, err := os.Open("./input")
@@ -26,6 +45,7 @@ func TestChallenge_Prepare(t *testing.T) {
 	var c Challenge
 	err := c.Prepare(bytes.NewReader([]byte(input)))
 	assert.NoError(t, err)
+	assert.Equal(t, []int{35, 20, 15, 25, 47, 40, 62, 55, 65, 95, 102, 117, 150, 182, 127, 219, 299, 277, 309, 576}, c.numbers)
 }
 
 func BenchmarkChallenge_Prepare(b *testing.B) {
@@ -36,6 +56,7 @@ func BenchmarkChallenge_Prepare(b *testing.B) {
 	}
 }
 
+/* fixme: need real input for testing part 1 and part 2
 func TestChallenge_Part1(t *testing.T) {
 	var c Challenge
 	err := c.Prepare(bytes.NewReader([]byte(input)))
@@ -44,6 +65,7 @@ func TestChallenge_Part1(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "", r)
 }
+*/
 
 func BenchmarkChallenge_Part1(b *testing.B) {
 	buf := bytes.NewReader(fullInput)
@@ -55,6 +77,7 @@ func BenchmarkChallenge_Part1(b *testing.B) {
 	}
 }
 
+/*
 func TestChallenge_Part2(t *testing.T) {
 	var c Challenge
 	err := c.Prepare(bytes.NewReader([]byte(input)))
@@ -63,6 +86,7 @@ func TestChallenge_Part2(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "", r)
 }
+*/
 
 func BenchmarkChallenge_Part2(b *testing.B) {
 	buf := bytes.NewReader(fullInput)
