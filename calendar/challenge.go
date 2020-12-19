@@ -11,20 +11,22 @@ import (
 	"github.com/gvassili/adventofcode2020/calendar/day07"
 	"github.com/gvassili/adventofcode2020/calendar/day08"
 	"github.com/gvassili/adventofcode2020/calendar/day09"
+	"github.com/gvassili/adventofcode2020/calendar/day10"
 	"io"
 	"sort"
 )
 
 var challenges = map[int]func() Challenge{
-	1: func() Challenge { return new(day01.Challenge) },
-	2: func() Challenge { return new(day02.Challenge) },
-	3: func() Challenge { return new(day03.Challenge) },
-	4: func() Challenge { return new(day04.Challenge) },
-	5: func() Challenge { return new(day05.Challenge) },
-	6: func() Challenge { return new(day06.Challenge) },
-	7: func() Challenge { return new(day07.Challenge) },
-	8: func() Challenge { return new(day08.Challenge) },
-	9: func() Challenge { return new(day09.Challenge) },
+	1:  func() Challenge { return new(day01.Challenge) },
+	2:  func() Challenge { return new(day02.Challenge) },
+	3:  func() Challenge { return new(day03.Challenge) },
+	4:  func() Challenge { return new(day04.Challenge) },
+	5:  func() Challenge { return new(day05.Challenge) },
+	6:  func() Challenge { return new(day06.Challenge) },
+	7:  func() Challenge { return new(day07.Challenge) },
+	8:  func() Challenge { return new(day08.Challenge) },
+	9:  func() Challenge { return new(day09.Challenge) },
+	10: func() Challenge { return new(day10.Challenge) },
 }
 
 func Load(day int) (Challenge, error) {
